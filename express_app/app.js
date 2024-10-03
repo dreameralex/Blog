@@ -3,11 +3,40 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+var fs = require('file-system');
+
 
 // var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 
 var app = express();
+
+
+//connect to mongodb
+mongoose.connect('mongodb://localhost:27017/express_app')
+.catch(err => {
+  console.error('App starting error:', err.stack);
+  process.exit(1);
+});
+
+
+
+var db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", function(callback){
+console.log("Connection Succeeded");
+});
+
+
+
+// mongoose.connect('mongodb://localhost:27017/express_app', function(){
+//   console.log('Connection has been made');
+// }
+// )
+
+
 
 // Require file system module
 var fs = require('file-system');

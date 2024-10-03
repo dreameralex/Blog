@@ -1,35 +1,35 @@
 <template>
     <v-form v-model="valid" ref="form" lazy-validation>
     <v-text-field
-        label="Movie Name"
-        v-model="name"
-        :rules="nameRules"
-        required
+      label="Movie Name"
+      v-model="name"
+      :rules="nameRules"
+      required
     ></v-text-field>
     <v-text-field
-        name="input-7-1"
-        label="Movie Description"
-        v-model="description"
-        multi-line
+      name="input-7-1"
+      label="Movie Description"
+      v-model="description"
+      multi-line
     ></v-text-field>
     <v-select
-        label="Movie Release Year"
-        v-model="release_year"
-        required
-        :rules="releaseRules"
-        :items="years"
+      label="Movie Release Year"
+      v-model="release_year"
+      required
+      :rules="releaseRules"
+      :items="years"
     ></v-select>
     <v-text-field
-        label="Movie Genre"
-        v-model="genre"
-        required
-        :rules="genreRules"
+      label="Movie Genre"
+      v-model="genre"
+      required
+      :rules="genreRules"
     ></v-text-field>
     <v-btn
-        @click="submit"
-        :disabled="!valid"
-        >
-        submit
+      @click="submit"
+      :disabled="!valid"
+    >
+      submit
     </v-btn>
     <v-btn @click="clear">clear</v-btn>
     </v-form>
@@ -62,6 +62,7 @@ export default {
       '2016',
       '2015',
     ],
+    checkbox: false,
   }),
   methods: {
     submit() {
@@ -80,10 +81,20 @@ export default {
           },
         })
           .then(() => {
+            this.$swal(
+              'Great!',
+              'Movie added successfully!',
+              'success',
+            );
             this.$router.push({ name: 'Home' });
             this.$refs.form.reset();
           })
           .catch(() => {
+            this.$swal(
+              'Oh oo!',
+              'Could not add the movie!',
+              'error',
+            );
           });
       }
       return true;

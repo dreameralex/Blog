@@ -4,7 +4,11 @@
       <v-card>
         <v-card-title primary-title>
           <div>
-            <div class="headline">{{ movie.name }}</div>
+            <div class="headline">
+              <v-btn flat v-bind:to="`/movies/${movie._id}`">
+                {{ movie.name }}
+              </v-btn>
+            </div>
             <span class="grey--text">{{ movie.release_year }} ‧ {{
             movie.genre }}</span>
           </div>
@@ -19,7 +23,7 @@
 
 <script>
 import axios from 'axios';
-import { response } from 'express';
+// import { response } from 'express';
 
 export default{
   name: 'Movies',
@@ -42,7 +46,7 @@ export default{
         })
         .catch(() => {
         });
-    }
-  }
-}
+    },
+  },
+};
 </script>

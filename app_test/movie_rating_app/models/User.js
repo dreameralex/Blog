@@ -23,3 +23,15 @@ module.exports.createUser = (newUser, callback) => {
         });
     });
 };
+//The preceding method will return the user that has the given email.
+module.exports.getUserByEmail = (email, callback) => {
+    const query = { email };
+    User.findOne(query, callback);
+};
+//check is the password
+module.exports.comparePassword = (candidatePassword, hash, callback) => {
+    bcryptjs.compare(candidatePassword, hash, (err, isMatch) => {
+    if (err) throw err;
+        callback(null, isMatch);
+    });
+};

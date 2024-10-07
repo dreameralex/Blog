@@ -14,10 +14,29 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
 jwtOptions.secretOrKey = 'movieratingapplicationsecretkey';
 const app = express();
 const router = express.Router();
+const serveStatic = require('serve-static');
+
+// const express = require('express');
+// const bodyParser = require('body-parser');
+// const mongoose = require('mongoose');
+// const cors = require('cors');
+// const morgan = require('morgan');
+// const fs = require('fs');
+// // const session = require('express-session');
+// // const config = require('./config/Config');
+// const passport = require('passport');
+// const app = express();
+// const router = express.Router();
+// const serveStatic = require('serve-static');
+
+
+
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use(cors());
+// Passport middleware
 app.use(passport.initialize());
+
 //connect to mongodb
 mongoose.connect('mongodb://localhost/movie_rating_app', function() {
     console.log('Connection has been made');
@@ -34,6 +53,7 @@ fs.readdirSync("controllers").forEach(function (file) {
     route.controller(app)
     }
 })
+app.use(serveStatic(__dirname + "/dist"));
 
 router.get('/', function(req, res) {
     res.json({ message: 'API Initialized!'});

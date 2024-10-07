@@ -5,7 +5,7 @@
         <v-card-title primary-title>
           <div>
             <div class="headline">
-              <v-btn flat v-bind:to="`/movies/${movie._id}`">
+              <v-btn text v-bind:to="`/movies/${movie._id}`">
                 {{ movie.name }}
               </v-btn>
             </div>

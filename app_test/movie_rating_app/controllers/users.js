@@ -1,4 +1,7 @@
 const User = require('../models/User.js');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
 
 const passportJWT = require('passport-jwt');
 const jwt = require('jsonwebtoken');
@@ -8,6 +11,40 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
 jwtOptions.secretOrKey = 'thisisthesecretkey';
 
 module.exports.controller = (app) => {
+    // local strategy
+    passport.use(new LocalStrategy({
+            usernameField: 'email',
+            passwordField: 'password',
+        }, (email, password, done) => {
+            User.getUserByEmail(email, (err, user) => {
+                if (err) { return done(err); }
+                if (!user) { return done(null, false); }
+                User.comparePassword(password, user.password, (error, isMatch) => {
+                    if (isMatch) {
+                        return done(null, user);
+                    }
+                    return done(null, false);
+                });
+                return true;
+            });
+        }));
+    // user login
+    app.post('/users/login',
+        passport.authenticate('local', { failureRedirect: '/users/login' }),
+        (req, res) => {
+            res.redirect('/');
+        });
+
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
+    });
+
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => {
+            done(err, user);
+        });
+    });
+
     // register a user
     app.post('/users/register', (req, res) => {
         const name = req.body.name;

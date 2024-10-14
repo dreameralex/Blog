@@ -11,7 +11,7 @@ import vuetify from '@/plugins/vuetify'; // path to vuetify export
 
 import App from './App';
 import router from './router';
-
+import { store } from './store/store';
 
 Vue.use(BootstrapVue);
 // Vue.use(Vuetify);
@@ -24,6 +24,7 @@ new Vue({
   // vuetify: new Vuetify(),
   vuetify,
   el: '#app',
+  store,
   router,
   components: { App },
   template: '<App/>',

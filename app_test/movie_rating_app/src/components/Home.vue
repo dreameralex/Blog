@@ -27,6 +27,14 @@ import axios from 'axios';
 
 export default{
   name: 'Movies',
+  computed: {
+    movies() {
+      return this.$store.getters.fetchMovies;
+    }
+  },
+  mounted() {
+    this.$store.dispatch("fetchMovies");
+  },
   data() {
     return {
       movies: [],

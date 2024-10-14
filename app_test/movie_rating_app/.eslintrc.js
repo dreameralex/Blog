@@ -30,6 +30,7 @@ module.exports = {
       js: 'never',
       vue: 'never'
     }],
+    "import/prefer-default-export": "off",
     'linebreak-style': ["off", "windows"],
     indent: 0,
     // disallow reassignment of function parameters
